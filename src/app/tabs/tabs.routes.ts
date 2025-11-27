@@ -9,7 +9,9 @@ export const routes: Routes = [
       {
         path: "tv-shows",
         loadComponent: () =>
-          import("./tv-shows/pages/tv-shows.page").then((m) => m.TvShowsPage),
+          import("./tv-shows/pages/tv-shows/tv-shows.page").then(
+            (m) => m.TvShowsPage
+          ),
       },
       {
         path: "search",

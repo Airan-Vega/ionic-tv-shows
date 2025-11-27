@@ -1,7 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { environment } from "@/environments/environment";
-import { TvShowsInterface } from "../interfaces";
+import { TvShowShow, TvShowsInterface } from "../interfaces";
 import { catchError, map, Observable, throwError } from "rxjs";
 import { TvShowsMapper } from "../mappers";
 import { TVShowsModel } from "../models";
@@ -26,7 +26,7 @@ export class TvShowsService {
       })
       .pipe(
         map((tvShows) => TvShowsMapper.mapTvShowArray(tvShows)),
-        catchError((error) => {
+        catchError((error: HttpErrorResponse) => {
           console.log("Error fetching ", error);
 
           return throwError(
@@ -34,5 +34,18 @@ export class TvShowsService {
           );
         })
       );
+  }
+
+  getTvShow(id: number) {
+    return this.http.get<TvShowShow>(`${baseUrl}/shows/${id}`).pipe(
+      map((tvShows) => TvShowsMapper.mapShow(tvShows)),
+      catchError((error: HttpErrorResponse) => {
+        console.log("Error fetching ", error);
+
+        return throwError(
+          () => new Error("The data for this show could not be loaded")
+        );
+      })
+    );
   }
 }
