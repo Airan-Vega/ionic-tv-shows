@@ -9,17 +9,19 @@ export const routes: Routes = [
       {
         path: "tv-shows",
         loadComponent: () =>
-          import("./tv-shows/tv-shows.page").then((m) => m.TvShowsPage),
+          import("./tv-shows/pages/tv-shows.page").then((m) => m.TvShowsPage),
       },
       {
         path: "search",
         loadComponent: () =>
-          import("./search/search.page").then((m) => m.SearchPage),
+          import("./search/pages/search.page").then((m) => m.SearchPage),
       },
       {
         path: "favorites",
         loadComponent: () =>
-          import("./favorites/favorites.page").then((m) => m.FavoritesPage),
+          import("./favorites/pages/favorites.page").then(
+            (m) => m.FavoritesPage
+          ),
       },
       {
         path: "",

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiTvShowUrl: 'https://api.tvmaze.com',
+  baseApiTvShowUrl: 'https://api.tvmaze.com',
 };
 
 /*

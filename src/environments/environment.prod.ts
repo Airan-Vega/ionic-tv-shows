@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiTvShowUrl: 'https://api.tvmaze.com',
+  baseApiTvShowUrl: 'https://api.tvmaze.com',
 };
