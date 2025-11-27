@@ -1,0 +1,7 @@
+{
+  "name": "ionic-tv-shows",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
