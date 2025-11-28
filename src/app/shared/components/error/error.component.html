@@ -1,0 +1,31 @@
+<section
+  class="ion-padding ion-display-flex ion-flex-column ion-justify-content-center ion-align-items-center"
+>
+  <div class="ion-display-flex ion-align-items-center">
+    <ion-icon name="alert-circle-outline" color="danger" size="large">
+    </ion-icon>
+    <ion-text color="danger">
+      <h3 class="ion-no-margin">Error de conexión</h3>
+    </ion-text>
+  </div>
+
+  @if (errorMessage()) {
+  <div
+    class="ion-margin-top ion-padding ion-background-light ion-radius ion-width-full ion-max-width-sm"
+  >
+    <ion-text color="danger" class="ion-font-size-small">
+      <code>{{ errorMessage() }}</code>
+    </ion-text>
+  </div>
+  }
+
+  <ion-button
+    (click)="retry.emit()"
+    color="primary"
+    fill="outline"
+    class="ion-margin-top ion-width-full ion-max-width-sm"
+  >
+    <ion-icon slot="start" name="refresh-outline"></ion-icon>
+    Retry
+  </ion-button>
+</section>
