@@ -1,0 +1,19 @@
+<section class="ion-padding">
+  <ion-input
+    inputmode="text"
+    label="Search"
+    label-placement="floating"
+    fill="solid"
+    placeholder="Enter text"
+    #txtSearch
+    (keyup)="inputValue.set(`${txtSearch['value']}`)"
+    [value]="inputValue()"
+  >
+    <ion-icon
+      slot="end"
+      [name]="inputValue() ? 'close' : 'search'"
+      aria-hidden="true"
+      (click)="inputValue.set('')"
+    ></ion-icon
+  ></ion-input>
+</section>

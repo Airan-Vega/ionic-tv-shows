@@ -7,6 +7,7 @@ import { TVShowsModel } from '../../models';
 import { SharedTvShowsComponents } from '../../components/tv-shows.components';
 import { SharedComponents } from '../../../../shared/components/shared.components';
 import { RefreshComponent } from '@/app/shared/components/refresh/refresh.component';
+import { divideInHalfArray } from '../../utils';
 
 @Component({
   selector: 'app-list',
@@ -16,11 +17,10 @@ import { RefreshComponent } from '@/app/shared/components/refresh/refresh.compon
 })
 export class ListPage implements OnInit {
   tvShowsService = inject(TvShowsService);
-  tvShows = signal<TVShowsModel[]>([]);
   isLoading = signal(false);
   errorMessage = signal<string | null>(null);
-  firstRow = signal<TVShowsModel[]>([]);
-  secondRow = signal<TVShowsModel[]>([]);
+  tvShowsFirstRow = signal<TVShowsModel[]>([]);
+  tvShowsSecondRow = signal<TVShowsModel[]>([]);
 
   ngOnInit(): void {
     this.loadTvShows();
@@ -34,18 +34,13 @@ export class ListPage implements OnInit {
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (tvShows) => {
-          this.tvShows.set(tvShows);
-          this.divideInHalfArray();
+          const { firstArr, secondArr } = divideInHalfArray(tvShows);
+          this.tvShowsFirstRow.set(firstArr);
+          this.tvShowsSecondRow.set(secondArr);
         },
         error: (error: Error) => {
           this.errorMessage.set(error.message);
         },
       });
-  }
-
-  private divideInHalfArray() {
-    const half = Math.floor(this.tvShows().length / 2);
-    this.firstRow.set(this.tvShows().slice(0, half));
-    this.secondRow.set(this.tvShows().slice(half));
   }
 }

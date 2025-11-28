@@ -1,88 +1,71 @@
 import { Component, inject, OnDestroy, signal } from '@angular/core';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-} from '@ionic/angular/standalone';
-import { TvShowsService } from '../../services/tv-shows.service';
+import { IonContent } from '@ionic/angular/standalone';
 import {
   debounceTime,
   distinctUntilChanged,
   finalize,
+  Observable,
   of,
   Subject,
   switchMap,
   takeUntil,
   tap,
 } from 'rxjs';
-import { TVShowsModel } from '../../models';
 import { FormControl } from '@angular/forms';
+
+import { TvShowsService } from '../../services/tv-shows.service';
+import { TVShowsModel } from '../../models';
+import { SearchInputComponent } from '@/app/shared/components/search-input/search-input.component';
+import { SharedTvShowsComponents } from '../../components/tv-shows.components';
+import { SharedComponents } from '../../../../shared/components/shared.components';
+import { divideInHalfArray } from '../../utils';
 
 @Component({
   selector: 'app-search',
   templateUrl: 'search.page.html',
   styleUrls: ['search.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [
+    IonContent,
+    SearchInputComponent,
+    ...SharedTvShowsComponents,
+    ...SharedComponents,
+  ],
 })
 export class SearchPage implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
 
   tvShowsService = inject(TvShowsService);
-  searchControl = new FormControl('');
-  tvShows = signal<TVShowsModel[]>([]);
   isLoading = signal(false);
   errorMessage = signal<string | null>(null);
-
-  constructor() {
-    this.setupSearch();
-  }
+  searchValue = signal('');
+  tvShowsFirstRow = signal<TVShowsModel[]>([]);
+  tvShowsSecondRow = signal<TVShowsModel[]>([]);
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  private setupSearch(): void {
-    this.searchControl.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((query) => {
-          if (!query || query.trim().length === 0) {
-            this.clearSearch();
-            return;
-          }
-          this.isLoading.set(true);
-          this.errorMessage.set(null);
-        }),
-        switchMap((query) => this.searchTvShows(query)),
-        takeUntil(this.destroy$)
-      )
+  setupSearch(value: string): void {
+    this.searchValue.set(value);
+    if (!value || value.trim().length === 0) {
+      this.tvShowsFirstRow.set([]);
+      this.tvShowsSecondRow.set([]);
+      return;
+    }
+
+    this.tvShowsService
+      .searchTvShow(value)
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (tvShows) => {
-          this.tvShows.set(tvShows);
-          console.log({ tvShows });
+          const { firstArr, secondArr } = divideInHalfArray(tvShows);
+          this.tvShowsFirstRow.set(firstArr);
+          this.tvShowsSecondRow.set(secondArr);
         },
         error: (error: Error) => {
           this.errorMessage.set(error.message);
         },
       });
-  }
-
-  private searchTvShows(query: string | null) {
-    if (!query || query.trim().length === 0) {
-      return of([]);
-    }
-
-    return this.tvShowsService
-      .searchTvShow(query)
-      .pipe(finalize(() => this.isLoading.set(false)));
-  }
-
-  private clearSearch() {
-    this.tvShows.set([]);
-    this.isLoading.set(false);
-    this.errorMessage.set(null);
   }
 }

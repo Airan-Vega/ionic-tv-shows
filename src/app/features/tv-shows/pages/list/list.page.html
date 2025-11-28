@@ -7,8 +7,8 @@
 
   <!-- <app-refresh [isLoading]="isLoading()" (refresh)="loadTvShows()" /> -->
   <section>
-    <app-slide-show navigatePath="/tv-shows/detail/" [tvShows]="firstRow()" />
-    <app-slide-show navigatePath="/tv-shows/detail/" [tvShows]="secondRow()" />
+    <app-slide-show [tvShows]="tvShowsFirstRow()" />
+    <app-slide-show [tvShows]="tvShowsSecondRow()" />
   </section>
   }
 </ion-content>

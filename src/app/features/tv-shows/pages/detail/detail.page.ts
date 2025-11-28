@@ -4,10 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
-  IonTitle,
   IonToolbar,
-  IonButton,
-  IonIcon,
   IonButtons,
   IonLabel,
   IonGrid,
@@ -16,9 +13,9 @@ import {
   IonItem,
   IonNote,
   IonChip,
-  IonFooter,
+  IonBackButton,
 } from '@ionic/angular/standalone';
-import { NavController } from '@ionic/angular';
+
 import { ActivatedRoute } from '@angular/router';
 import {
   distinctUntilChanged,
@@ -42,7 +39,6 @@ import { SharedComponents } from '../../../../shared/components/shared.component
   styleUrls: ['./detail.page.scss'],
   standalone: true,
   imports: [
-    IonFooter,
     IonChip,
     IonNote,
     IonItem,
@@ -51,14 +47,12 @@ import { SharedComponents } from '../../../../shared/components/shared.component
     IonGrid,
     IonLabel,
     IonButtons,
-    IonIcon,
-    IonButton,
     IonContent,
     IonHeader,
-    IonTitle,
     IonToolbar,
     CommonModule,
     FormsModule,
+    IonBackButton,
     ...SharedPipes,
     ...SharedComponents,
   ],
@@ -66,7 +60,6 @@ import { SharedComponents } from '../../../../shared/components/shared.component
 export class DetailPage implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   private route = inject(ActivatedRoute);
-  private navCtrl = inject(NavController);
   tvShowsService = inject(TvShowsService);
   tvShow = signal<TVShowsModel | null>(null);
   isLoading = signal(false);
@@ -111,12 +104,5 @@ export class DetailPage implements OnInit, OnDestroy {
       });
 
     this.subscription.add(subs);
-  }
-
-  favorito() {
-    throw new Error('Method not implemented.');
-  }
-  goBack() {
-    this.navCtrl.back(); // Vuelve a la página anterior en la pila de navegación
   }
 }

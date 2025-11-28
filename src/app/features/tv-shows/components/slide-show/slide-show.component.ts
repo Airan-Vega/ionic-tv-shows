@@ -1,9 +1,9 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
 import { IonicSlides } from '@ionic/angular';
-import { TVShowsModel } from '../../models';
 import { IonCard } from '@ionic/angular/standalone';
-import { SharedPipes } from '../../../../shared/pipes/shared.pipes';
 import { RouterLink } from '@angular/router';
+import { TVShowsModel } from '../../models';
+import { SharedPipes } from '../../../../shared/pipes/shared.pipes';
 
 @Component({
   selector: 'app-slide-show',
@@ -15,7 +15,6 @@ import { RouterLink } from '@angular/router';
 export class SlideShowComponent {
   swiperModules = [IonicSlides];
   tvShows = input.required<TVShowsModel[]>();
-  navigatePath = input.required<string>();
   slideOpts = {
     slidesPerView: 3.3,
     freeMode: true,
