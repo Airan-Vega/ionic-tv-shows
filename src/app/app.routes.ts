@@ -6,10 +6,8 @@ export const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
   },
   {
-    path: 'tv-show-detail/:id',
-    loadComponent: () =>
-      import('./tabs/tv-shows/pages/tv-show-detail/tv-show-detail.page').then(
-        (m) => m.TvShowDetailPage
-      ),
+    path: 'tv-shows',
+    loadChildren: () =>
+      import('@/app/features/tv-shows/tv-shows.routes').then((m) => m.routes),
   },
 ];

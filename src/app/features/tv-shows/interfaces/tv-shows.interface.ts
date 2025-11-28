@@ -16,6 +16,11 @@ export interface TvShowsInterface {
   _links: TvShowLinks;
 }
 
+export interface TvShowsSearchInterface {
+  score: number;
+  show: TvShowShow;
+}
+
 export interface TvShowLinks {
   self: Self;
   show: NextepisodeClass;
@@ -78,15 +83,15 @@ export interface Country {
 }
 
 export enum Code {
-  Us = "US",
+  Us = 'US',
 }
 
 export enum Name {
-  UnitedStates = "United States",
+  UnitedStates = 'United States',
 }
 
 export enum Timezone {
-  AmericaNewYork = "America/New_York",
+  AmericaNewYork = 'America/New_York',
 }
 
 export interface Externals {
@@ -95,7 +100,7 @@ export interface Externals {
   imdb: null | string;
 }
 
-export type Language = "English" | "Spanish";
+export type Language = 'English' | 'Spanish';
 
 export interface Network {
   id: number;
@@ -110,18 +115,18 @@ export interface Schedule {
 }
 
 export enum Day {
-  Friday = "Friday",
-  Monday = "Monday",
-  Saturday = "Saturday",
-  Sunday = "Sunday",
-  Thursday = "Thursday",
-  Tuesday = "Tuesday",
-  Wednesday = "Wednesday",
+  Friday = 'Friday',
+  Monday = 'Monday',
+  Saturday = 'Saturday',
+  Sunday = 'Sunday',
+  Thursday = 'Thursday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday',
 }
 
-export type Status = "Ended" | "Running" | "To Be Determined";
+export type Status = 'Ended' | 'Running' | 'To Be Determined';
 
 export enum Type {
-  InsignificantSpecial = "insignificant_special",
-  Regular = "regular",
+  InsignificantSpecial = 'insignificant_special',
+  Regular = 'regular',
 }

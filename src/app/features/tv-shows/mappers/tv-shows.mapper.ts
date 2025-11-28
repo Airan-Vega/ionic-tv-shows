@@ -1,5 +1,5 @@
-import { TvShowShow, TvShowsInterface } from "../interfaces";
-import { TVShowsModel } from "../models";
+import { TvShowShow, TvShowsInterface } from '../interfaces';
+import { TVShowsModel } from '../models';
 
 export class TvShowsMapper {
   static mapShow(show: TvShowShow): TVShowsModel {
@@ -20,5 +20,9 @@ export class TvShowsMapper {
 
   static mapTvShowArray(tvShows: TvShowsInterface[]): TVShowsModel[] {
     return tvShows.map(({ show }) => this.mapShow(show));
+  }
+
+  static mapShowArray(shows: TvShowShow[]): TVShowsModel[] {
+    return shows.map((show) => this.mapShow(show));
   }
 }
