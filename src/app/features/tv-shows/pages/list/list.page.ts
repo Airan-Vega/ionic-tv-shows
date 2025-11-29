@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   IonContent,
   IonItem,
@@ -14,16 +8,16 @@ import {
   IonButtons,
   IonIcon,
   RefresherCustomEvent,
+  IonActionSheet,
 } from '@ionic/angular/standalone';
 import { finalize } from 'rxjs';
-import { ActionSheetController } from '@ionic/angular';
+import { addIcons } from 'ionicons';
 
 import { TvShowsService } from '../../services/tv-shows.service';
 import { TVShowsModel } from '../../models';
 import { SharedTvShowsComponents } from '../../components/tv-shows.components';
 import { SharedComponents } from '../../../../shared/components/shared.components';
 import { divideInHalfArray } from '../../utils';
-import { addIcons } from 'ionicons';
 import { closeOutline, filterOutline, trashOutline } from 'ionicons/icons';
 import { Genres, Ratings } from '../../constants';
 import { RatingValues } from '../../enum';
@@ -33,6 +27,7 @@ import { RatingValues } from '../../enum';
   templateUrl: 'list.page.html',
   styleUrls: ['list.page.scss'],
   imports: [
+    IonActionSheet,
     IonIcon,
     IonToolbar,
     IonButton,
@@ -45,18 +40,67 @@ import { RatingValues } from '../../enum';
   ],
 })
 export class ListPage implements OnInit {
-  private actionSheetCtrl = inject(ActionSheetController);
   tvShowsService = inject(TvShowsService);
   isLoading = signal(false);
   errorMessage = signal<string | null>(null);
   tvShows = signal<TVShowsModel[]>([]);
   tvShowsFirstRow = signal<TVShowsModel[]>([]);
   tvShowsSecondRow = signal<TVShowsModel[]>([]);
-  genres = Genres;
-  ratings = Ratings;
   selectedGender = signal<string | null>(null);
   selectedRating = signal<string | null>(null);
   filteredTvShows = signal<TVShowsModel[]>([]);
+
+  genderActionSheetButtons = [
+    {
+      text: 'Clear Filter',
+      role: 'destructive',
+      icon: 'trash-outline',
+      handler: () => {
+        this.selectedGender.set(null);
+        this.filter();
+      },
+    },
+    ...Genres.map((genre) => {
+      return {
+        ...genre,
+        handler: () => {
+          this.selectedGender.set(genre.text);
+          this.filter();
+        },
+      };
+    }),
+    {
+      text: 'Cancel',
+      icon: 'close-outline',
+      role: 'cancel',
+    },
+  ];
+
+  ratingActionSheetButtons = [
+    {
+      text: 'Clear Filter',
+      role: 'destructive',
+      icon: 'trash-outline',
+      handler: () => {
+        this.selectedRating.set(null);
+        this.filter();
+      },
+    },
+    ...Ratings.map((rating) => {
+      return {
+        ...rating,
+        handler: () => {
+          this.selectedRating.set(rating.text);
+          this.filter();
+        },
+      };
+    }),
+    {
+      text: 'Cancel',
+      icon: 'close-outline',
+      role: 'cancel',
+    },
+  ];
 
   constructor() {
     addIcons({
@@ -79,9 +123,10 @@ export class ListPage implements OnInit {
       .getTvShows()
       .pipe(
         finalize(() => {
-          this.isLoading.set(false);
           if (eventRefresh) {
             eventRefresh.target.complete();
+          } else {
+            this.isLoading.set(false);
           }
         })
       )
@@ -96,50 +141,6 @@ export class ListPage implements OnInit {
           this.errorMessage.set(error.message);
         },
       });
-  }
-
-  async openActionSheet({
-    headerTitle,
-    options,
-    selectedValue,
-  }: {
-    headerTitle: string;
-    options: {
-      text: string;
-    }[];
-    selectedValue: WritableSignal<string | null>;
-  }) {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: headerTitle,
-      backdropDismiss: false,
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'trash-outline',
-          cssClass: 'rojo',
-          handler: () => {
-            selectedValue.set(null);
-            this.filter();
-          },
-        },
-        ...options.map((option) => {
-          return {
-            ...option,
-            handler: () => {
-              selectedValue.set(option.text);
-              this.filter();
-            },
-          };
-        }),
-        {
-          text: 'Cancel',
-          icon: 'close-outline',
-          role: 'cancel',
-        },
-      ],
-    });
-    await actionSheet.present();
   }
 
   private filterByGender() {

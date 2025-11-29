@@ -16,11 +16,11 @@ import {
   IonBackButton,
   RefresherCustomEvent,
 } from '@ionic/angular/standalone';
-
 import { ActivatedRoute } from '@angular/router';
 import {
   distinctUntilChanged,
   filter,
+  finalize,
   map,
   Subscription,
   switchMap,
@@ -91,25 +91,21 @@ export class DetailPage implements OnInit, OnDestroy {
           }
           this.errorMessage.set('');
         }),
-        switchMap((id) => {
-          return this.tvShowsService.getTvShow(Number(id));
-        })
+        switchMap((id) =>
+          this.tvShowsService.getTvShow(Number(id)).pipe(
+            finalize(() => {
+              if (eventRefresh) {
+                eventRefresh.target.complete();
+              } else {
+                this.isLoading.set(false);
+              }
+            })
+          )
+        )
       )
       .subscribe({
-        next: (tvShow) => {
-          this.tvShow.set(tvShow);
-          this.isLoading.set(false);
-          if (eventRefresh) {
-            eventRefresh.target.complete();
-          }
-        },
-        error: (error: Error) => {
-          this.errorMessage.set(error.message);
-          this.isLoading.set(false);
-          if (eventRefresh) {
-            eventRefresh.target.complete();
-          }
-        },
+        next: (tvShow) => this.tvShow.set(tvShow),
+        error: (error: Error) => this.errorMessage.set(error.message),
       });
 
     this.subscription.add(subs);

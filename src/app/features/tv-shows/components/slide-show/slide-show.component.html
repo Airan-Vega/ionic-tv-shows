@@ -4,7 +4,7 @@
   [freeMode]="slideOpts.freeMode"
   [spaceBetween]="slideOpts.spaceBetween"
 >
-  @for (tvShow of tvShows(); track tvShow.id + $index) {
+  @for (tvShow of tvShows(); track tvShow.id) {
 
   <swiper-slide>
     <ion-row [routerLink]="['/tv-shows/detail', tvShow.id]">

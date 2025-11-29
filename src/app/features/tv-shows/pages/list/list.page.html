@@ -1,26 +1,29 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="ion-margin-top">
     <ion-buttons slot="start">
-      <ion-button
-        fill="solid"
-        (click)="openActionSheet({headerTitle:'Genres',options:genres, selectedValue:selectedGender})"
-      >
+      <ion-button id="open-action-sheet-gender" fill="solid" expand="block">
         @if(selectedGender()){ {{selectedGender()}} }@else { Filter by gender }
-        <ion-icon class="ion-padding-start" name="filter-outline"></ion-icon>
+        <ion-icon class="ion-padding-start" name="filter-outline" />
       </ion-button>
+      <ion-action-sheet
+        trigger="open-action-sheet-gender"
+        header="Genders"
+        [buttons]="genderActionSheetButtons"
+      />
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button
-        slot="end"
-        fill="solid"
-        (click)="openActionSheet({headerTitle:'Ratings',options:ratings, selectedValue:selectedRating})"
-      >
+      <ion-button fill="solid" id="open-action-sheet-rating" expand="block">
         @if(selectedRating()){ {{selectedRating()}} }@else { Filter by rating }
-
         <ion-icon class="ion-padding-start" name="filter-outline"></ion-icon>
       </ion-button>
-    </ion-buttons> </ion-toolbar
-></ion-header>
+      <ion-action-sheet
+        trigger="open-action-sheet-rating"
+        header="Ratings"
+        [buttons]="ratingActionSheetButtons"
+      />
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   @if(errorMessage()){
@@ -30,14 +33,20 @@
   } @else {
 
   <app-refresh (refresh)="loadTvShows($event)" />
+
   <section
     class="ion-display-flex ion-flex-column ion-justify-content-center ion-min-height-100 full-min-height"
   >
+    @if(tvShowsFirstRow().length > 0 || tvShowsSecondRow().length>0){
+
     <ion-item>
       <h4>List of television programmes</h4>
     </ion-item>
     <app-slide-show [tvShows]="tvShowsFirstRow()" />
     <app-slide-show [tvShows]="tvShowsSecondRow()" />
+    }@else {
+    <app-without-results message="Try selecting another value." />
+    }
   </section>
   }
 </ion-content>

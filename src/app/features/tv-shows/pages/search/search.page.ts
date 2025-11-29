@@ -1,22 +1,6 @@
 import { Component, inject, OnDestroy, signal } from '@angular/core';
-import {
-  IonContent,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-} from '@ionic/angular/standalone';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  finalize,
-  Observable,
-  of,
-  Subject,
-  switchMap,
-  takeUntil,
-  tap,
-} from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { IonContent, IonHeader, IonToolbar } from '@ionic/angular/standalone';
+import { finalize, Subject } from 'rxjs';
 
 import { TvShowsService } from '../../services/tv-shows.service';
 import { TVShowsModel } from '../../models';
@@ -61,6 +45,7 @@ export class SearchPage implements OnDestroy {
       return;
     }
 
+    this.isLoading.set(true);
     this.tvShowsService
       .searchTvShow(value)
       .pipe(finalize(() => this.isLoading.set(false)))

@@ -1,14 +1,16 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@/environments/environment';
+import { catchError, map, Observable, throwError } from 'rxjs';
+
 import {
   TvShowShow,
   TvShowsInterface,
   TvShowsSearchInterface,
 } from '../interfaces';
-import { catchError, map, Observable, throwError } from 'rxjs';
 import { TvShowsMapper } from '../mappers';
 import { TVShowsModel } from '../models';
+import { removeDuplicateElementsFromArrayObject } from '@/app/shared/utils';
 
 const baseUrl = environment.baseApiTvShowUrl;
 const COUNTRY = 'US';
@@ -30,6 +32,7 @@ export class TvShowsService {
       })
       .pipe(
         map((tvShows) => TvShowsMapper.mapTvShowArray(tvShows)),
+        map((tvShows) => removeDuplicateElementsFromArrayObject(tvShows, 'id')),
         catchError((error: HttpErrorResponse) => {
           console.log('Error fetching ', error);
 
@@ -63,6 +66,7 @@ export class TvShowsService {
       .pipe(
         map((tvShows) => tvShows.map(({ show }) => show)),
         map((shows) => TvShowsMapper.mapShowArray(shows)),
+        map((shows) => removeDuplicateElementsFromArrayObject(shows, 'id')),
         catchError((error: HttpErrorResponse) => {
           console.log('Error fetching ', error);
 
