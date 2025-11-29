@@ -1,3 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button
+        fill="solid"
+        (click)="openActionSheet({headerTitle:'Genres',options:genres, selectedValue:selectedGender})"
+      >
+        @if(selectedGender()){ {{selectedGender()}} }@else { Filter by gender }
+        <ion-icon class="ion-padding-start" name="filter-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button
+        slot="end"
+        fill="solid"
+        (click)="openActionSheet({headerTitle:'Ratings',options:ratings, selectedValue:selectedRating})"
+      >
+        @if(selectedRating()){ {{selectedRating()}} }@else { Filter by rating }
+
+        <ion-icon class="ion-padding-start" name="filter-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons> </ion-toolbar
+></ion-header>
+
 <ion-content>
   @if(errorMessage()){
   <app-error [errorMessage]="errorMessage()" (retry)="loadTvShows()" />
