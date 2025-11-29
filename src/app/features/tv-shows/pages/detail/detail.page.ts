@@ -14,6 +14,7 @@ import {
   IonNote,
   IonChip,
   IonBackButton,
+  RefresherCustomEvent,
 } from '@ionic/angular/standalone';
 
 import { ActivatedRoute } from '@angular/router';
@@ -78,14 +79,16 @@ export class DetailPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  loadTvShow() {
+  loadTvShow(eventRefresh?: RefresherCustomEvent) {
     const subs = this.route.paramMap
       .pipe(
         map((params) => params.get('id')),
         distinctUntilChanged(),
         filter((id) => id !== null && id !== ''),
         tap(() => {
-          this.isLoading.set(true);
+          if (!eventRefresh) {
+            this.isLoading.set(true);
+          }
           this.errorMessage.set('');
         }),
         switchMap((id) => {
@@ -96,10 +99,16 @@ export class DetailPage implements OnInit, OnDestroy {
         next: (tvShow) => {
           this.tvShow.set(tvShow);
           this.isLoading.set(false);
+          if (eventRefresh) {
+            eventRefresh.target.complete();
+          }
         },
         error: (error: Error) => {
           this.errorMessage.set(error.message);
           this.isLoading.set(false);
+          if (eventRefresh) {
+            eventRefresh.target.complete();
+          }
         },
       });
 

@@ -13,6 +13,8 @@
   <app-loading />
   } @else {
 
+  <app-refresh (refresh)="loadTvShow($event)"></app-refresh>
+
   <ion-label class="ion-padding ion-text-center">
     <h1>{{ tvShow()?.name }}</h1>
   </ion-label>

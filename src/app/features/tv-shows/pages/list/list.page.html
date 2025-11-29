@@ -29,7 +29,7 @@
   <app-loading />
   } @else {
 
-  <!-- <app-refresh [isLoading]="isLoading()" (refresh)="loadTvShows()" /> -->
+  <app-refresh (refresh)="loadTvShows($event)" />
   <section
     class="ion-display-flex ion-flex-column ion-justify-content-center ion-min-height-100 full-min-height"
   >

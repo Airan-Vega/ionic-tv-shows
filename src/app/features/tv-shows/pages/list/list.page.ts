@@ -13,6 +13,7 @@ import {
   IonToolbar,
   IonButtons,
   IonIcon,
+  RefresherCustomEvent,
 } from '@ionic/angular/standalone';
 import { finalize } from 'rxjs';
 import { ActionSheetController } from '@ionic/angular';
@@ -21,7 +22,6 @@ import { TvShowsService } from '../../services/tv-shows.service';
 import { TVShowsModel } from '../../models';
 import { SharedTvShowsComponents } from '../../components/tv-shows.components';
 import { SharedComponents } from '../../../../shared/components/shared.components';
-import { RefreshComponent } from '@/app/shared/components/refresh/refresh.component';
 import { divideInHalfArray } from '../../utils';
 import { addIcons } from 'ionicons';
 import { closeOutline, filterOutline, trashOutline } from 'ionicons/icons';
@@ -70,12 +70,21 @@ export class ListPage implements OnInit {
     this.loadTvShows();
   }
 
-  loadTvShows() {
-    this.isLoading.set(true);
+  loadTvShows(eventRefresh?: RefresherCustomEvent) {
+    if (!eventRefresh) {
+      this.isLoading.set(true);
+    }
     this.errorMessage.set(null);
     this.tvShowsService
       .getTvShows()
-      .pipe(finalize(() => this.isLoading.set(false)))
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false);
+          if (eventRefresh) {
+            eventRefresh.target.complete();
+          }
+        })
+      )
       .subscribe({
         next: (tvShows) => {
           this.tvShows.set(tvShows);
