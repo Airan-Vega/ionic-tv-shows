@@ -1,5 +1,12 @@
 import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonToolbar,
+  IonHeader,
+  IonTitle,
+  IonItem,
+  IonLabel,
+} from '@ionic/angular/standalone';
 import { finalize } from 'rxjs';
 
 import { TvShowsService } from '../../services/tv-shows.service';
@@ -13,7 +20,12 @@ import { divideInHalfArray } from '../../utils';
   selector: 'app-list',
   templateUrl: 'list.page.html',
   styleUrls: ['list.page.scss'],
-  imports: [IonContent, ...SharedTvShowsComponents, ...SharedComponents],
+  imports: [
+    IonItem,
+    IonContent,
+    ...SharedTvShowsComponents,
+    ...SharedComponents,
+  ],
 })
 export class ListPage implements OnInit {
   tvShowsService = inject(TvShowsService);

@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content>
   @if(errorMessage()){
   <app-error [errorMessage]="errorMessage()" (retry)="loadTvShows()" />
   } @else if(isLoading()){
@@ -6,7 +6,12 @@
   } @else {
 
   <!-- <app-refresh [isLoading]="isLoading()" (refresh)="loadTvShows()" /> -->
-  <section>
+  <section
+    class="ion-display-flex ion-flex-column ion-justify-content-center ion-min-height-100 full-min-height"
+  >
+    <ion-item>
+      <h4>List of television programmes</h4>
+    </ion-item>
     <app-slide-show [tvShows]="tvShowsFirstRow()" />
     <app-slide-show [tvShows]="tvShowsSecondRow()" />
   </section>

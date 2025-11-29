@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding-bottom ion-padding-start ion-padding-end">
   @if(errorMessage()){
   <app-error [errorMessage]="errorMessage()" (retry)="loadTvShow()" />
   } @else if(isLoading()){

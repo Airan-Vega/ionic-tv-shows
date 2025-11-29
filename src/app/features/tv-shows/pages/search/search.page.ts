@@ -1,5 +1,10 @@
 import { Component, inject, OnDestroy, signal } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+} from '@ionic/angular/standalone';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -25,6 +30,8 @@ import { divideInHalfArray } from '../../utils';
   templateUrl: 'search.page.html',
   styleUrls: ['search.page.scss'],
   imports: [
+    IonToolbar,
+    IonHeader,
     IonContent,
     SearchInputComponent,
     ...SharedTvShowsComponents,

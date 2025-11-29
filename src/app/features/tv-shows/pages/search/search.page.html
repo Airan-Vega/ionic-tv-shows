@@ -1,6 +1,9 @@
-<ion-content [fullscreen]="true">
-  <app-search-input (value)="setupSearch($event)" />
-
+<ion-header>
+  <ion-toolbar>
+    <app-search-input (value)="setupSearch($event)" />
+  </ion-toolbar>
+</ion-header>
+<ion-content>
   @if(errorMessage()){
   <app-error
     [errorMessage]="errorMessage()"
@@ -11,9 +14,16 @@
   } @else {
 
   <!-- <app-refresh [isLoading]="isLoading()" (refresh)="loadTvShows()" /> -->
-  <section>
+  <section
+    class="ion-display-flex ion-flex-column ion-justify-content-center ion-min-height-100 full-min-height"
+  >
+    @if(this.searchValue()){ @if(tvShowsFirstRow().length>0){
+
     <app-slide-show [tvShows]="tvShowsFirstRow()" />
     <app-slide-show [tvShows]="tvShowsSecondRow()" />
+    } @else{
+    <app-without-results />
+    } }
   </section>
   }
 </ion-content>
