@@ -16,16 +16,13 @@ export const tabsRoutes: Routes = [
       ),
   },
   {
-    path: 'favorites',
-    loadComponent: () =>
-      import('@/app/features/tv-shows/pages/favorites/favorites.page').then(
-        (m) => m.FavoritesPage
-      ),
-  },
-  {
     path: '',
     redirectTo: 'tv-shows',
     pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: 'tv-shows',
   },
 ];
 
@@ -41,5 +38,9 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/tabs/tv-shows',
     pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: '/tabs/tv-shows',
   },
 ];

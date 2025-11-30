@@ -35,4 +35,5 @@ https://capacitorjs.com/docs/ios
 
 # Folder Organization
 
-I have chosen to structure the files in a modular way to separate the business logic into different modules. This organization facilitates the scalability and maintenance of the project. The modules created are as follows: Favorites, Search, and TV Shows.
+I have chosen to structure the files in a modular way to separate the business logic into different modules. This organization facilitates the scalability and maintenance of the project.
+All modules will be contained within the “feature” folder. In this case, only one module was needed, which would be tv-shows. 

@@ -10,4 +10,8 @@ export const routes: Routes = [
     loadChildren: () =>
       import('@/app/features/tv-shows/tv-shows.routes').then((m) => m.routes),
   },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];

@@ -1,24 +1,24 @@
-import { Component, EnvironmentInjector, inject } from "@angular/core";
+import { Component, EnvironmentInjector, inject } from '@angular/core';
 import {
   IonTabs,
   IonTabBar,
   IonTabButton,
   IonIcon,
   IonLabel,
-} from "@ionic/angular/standalone";
-import { addIcons } from "ionicons";
-import { home, search, starOutline } from "ionicons/icons";
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { home, search } from 'ionicons/icons';
 
 @Component({
-  selector: "app-tabs",
-  templateUrl: "tabs.page.html",
-  styleUrls: ["tabs.page.scss"],
+  selector: 'app-tabs',
+  templateUrl: 'tabs.page.html',
+  styleUrls: ['tabs.page.scss'],
   imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
 })
 export class TabsPage {
   public environmentInjector = inject(EnvironmentInjector);
 
   constructor() {
-    addIcons({ home, search, "star-outline": starOutline });
+    addIcons({ home, search });
   }
 }
