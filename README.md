@@ -1,6 +1,7 @@
 # Project Creation
 
 It has been created using the tab template that comes with Ionic.
+No design template has been used.
 
 ## Versions Used:
 
@@ -32,6 +33,13 @@ npx cap open ios
 npx cap sync ios
 ```
 https://capacitorjs.com/docs/ios
+
+## Command to Start the unit tests:
+Some tests have been implemented, but complete coverage has not been achieved.
+
+```bash
+ng test
+```
 
 # Folder Organization
 
