@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonRefresher,
+  IonRefresherContent,
+  RefresherCustomEvent,
+} from '@ionic/angular/standalone';
 
 import { RefreshComponent } from './refresh.component';
 
@@ -9,8 +13,7 @@ describe('RefreshComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RefreshComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonRefresher, IonRefresherContent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RefreshComponent);
@@ -18,7 +21,18 @@ describe('RefreshComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('Should create refresh component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Should emit the event when handleRefresh is called', () => {
+    const refreshSpy = spyOn(component.refresh, 'emit');
+
+    const mockEvent = {
+      detail: { complete: () => {} },
+    } as RefresherCustomEvent;
+    component.handleRefresh(mockEvent);
+
+    expect(refreshSpy).toHaveBeenCalledWith(mockEvent);
   });
 });

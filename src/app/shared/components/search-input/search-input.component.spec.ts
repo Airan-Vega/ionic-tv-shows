@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonInput, IonIcon } from '@ionic/angular/standalone';
 
 import { SearchInputComponent } from './search-input.component';
 
@@ -9,8 +9,7 @@ describe('SearchInputComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchInputComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonInput, IonIcon],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SearchInputComponent);
@@ -18,7 +17,7 @@ describe('SearchInputComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('Should create search input component', () => {
     expect(component).toBeTruthy();
   });
 });

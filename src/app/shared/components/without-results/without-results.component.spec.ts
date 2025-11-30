@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonGrid, IonRow, IonIcon, IonCol } from '@ionic/angular/standalone';
 
 import { WithoutResultsComponent } from './without-results.component';
 
@@ -9,8 +9,7 @@ describe('WithoutResultsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WithoutResultsComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonCol, IonIcon, IonRow, IonGrid],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WithoutResultsComponent);
@@ -18,7 +17,7 @@ describe('WithoutResultsComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('Should create without results component', () => {
     expect(component).toBeTruthy();
   });
 });

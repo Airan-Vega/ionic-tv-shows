@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonCard } from '@ionic/angular/standalone';
 
 import { SlideShowComponent } from './slide-show.component';
+import { RouterLink } from '@angular/router';
+import { SharedPipes } from '@/app/shared/pipes/shared.pipes';
 
 describe('SlideShowComponent', () => {
   let component: SlideShowComponent;
@@ -9,16 +11,16 @@ describe('SlideShowComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SlideShowComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [SlideShowComponent, IonCard, RouterLink, ...SharedPipes],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SlideShowComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('tvShows', []);
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('Should create the slide show component', () => {
     expect(component).toBeTruthy();
   });
 });

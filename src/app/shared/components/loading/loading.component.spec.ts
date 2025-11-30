@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonSpinner } from '@ionic/angular/standalone';
 
 import { LoadingComponent } from './loading.component';
 
@@ -9,8 +9,7 @@ describe('LoadingComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonSpinner],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoadingComponent);
@@ -18,7 +17,7 @@ describe('LoadingComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('Should create loading component', () => {
     expect(component).toBeTruthy();
   });
 });

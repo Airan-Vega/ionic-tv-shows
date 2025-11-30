@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonIcon, IonText, IonButton } from '@ionic/angular/standalone';
 
 import { ErrorComponent } from './error.component';
 
@@ -9,8 +9,7 @@ describe('ErrorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErrorComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonButton, IonText, IonIcon],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorComponent);
@@ -18,7 +17,7 @@ describe('ErrorComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it('Should create error component', () => {
     expect(component).toBeTruthy();
   });
 });
